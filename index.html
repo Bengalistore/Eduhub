@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Education Platform</title>
+  <title>EduHub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2 class="title">Select Batch</h2>
+<header class="header">EduHub</header>
+
+<div class="menu">
+  <button onclick="filterBatch('all')" class="active">All</button>
+  <button onclick="filterBatch('neet')">NEET</button>
+  <button onclick="filterBatch('11')">Class 11</button>
+  <button onclick="filterBatch('12')">Class 12</button>
+</div>
 
 <div id="batchContainer" class="grid"></div>
 
-<div id="subjectContainer" class="grid hidden"></div>
-<div id="chapterContainer" class="grid hidden"></div>
-<div id="classContainer" class="grid hidden"></div>
-
-<div id="player" class="hidden"></div>
+<div id="batchDetails" class="hidden"></div>
 
 <script src="app.js"></script>
 </body>
