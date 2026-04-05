@@ -1,4 +1,5 @@
 let data;
+let currentFilter = "all";
 
 fetch('data.json')
 .then(res => res.json())
@@ -11,9 +12,15 @@ function loadBatches() {
   let container = document.getElementById("batchContainer");
   container.innerHTML = "";
 
-  data.batches.forEach(batch => {
+  let batches = data.batches.filter(b => {
+    if(currentFilter === "all") return true;
+    if(currentFilter === "neet") return b.type === "neet";
+    return b.class === currentFilter;
+  });
+
+  batches.forEach(batch => {
     container.innerHTML += `
-      <div class="card" onclick="openSubjects('${batch.id}')">
+      <div class="card" onclick="openBatch('${batch.id}')">
         <img src="${batch.image}">
         <h4>${batch.title}</h4>
       </div>
@@ -21,74 +28,38 @@ function loadBatches() {
   });
 }
 
-function openSubjects(id) {
-  hideAll();
+function filterBatch(type) {
+  currentFilter = type;
+
+  document.querySelectorAll('.menu button').forEach(btn=>{
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+
+  loadBatches();
+}
+
+function openBatch(id) {
   let batch = data.batches.find(b => b.id === id);
-  let container = document.getElementById("subjectContainer");
 
-  container.classList.remove("hidden");
+  let details = document.getElementById("batchDetails");
+  details.classList.remove("hidden");
 
-  batch.subjects.forEach(sub => {
-    container.innerHTML += `
-      <div class="card" onclick="openChapters('${id}','${sub.id}')">
-        <img src="${sub.image}">
-        <h4>${sub.title}</h4>
-      </div>
-    `;
-  });
-}
+  details.innerHTML = `
+    <h2>${batch.title}</h2>
+    <img src="${batch.image}" style="width:100%">
+    <p>Date: ${batch.date}</p>
+    <p>Time: ${batch.time}</p>
+    <p>${batch.overview}</p>
 
-function openChapters(batchId, subjectId) {
-  hideAll();
-  let batch = data.batches.find(b => b.id === batchId);
-  let subject = batch.subjects.find(s => s.id === subjectId);
-
-  let container = document.getElementById("chapterContainer");
-  container.classList.remove("hidden");
-
-  subject.chapters.forEach(ch => {
-    container.innerHTML += `
-      <div class="card" onclick="openClasses('${batchId}','${subjectId}','${ch.id}')">
-        <h4>${ch.title}</h4>
-      </div>
-    `;
-  });
-}
-
-function openClasses(batchId, subjectId, chapterId) {
-  hideAll();
-
-  let batch = data.batches.find(b => b.id === batchId);
-  let subject = batch.subjects.find(s => s.id === subjectId);
-  let chapter = subject.chapters.find(c => c.id === chapterId);
-
-  let container = document.getElementById("classContainer");
-  container.classList.remove("hidden");
-
-  chapter.classes.forEach(cls => {
-    container.innerHTML += `
-      <div class="card" onclick="playVideo('${cls.video}')">
-        <h4>${cls.title}</h4>
-        <p>${cls.topic}</p>
-        <p>${cls.duration}</p>
-        <a href="${cls.pdf}" target="_blank">Notes</a>
-      </div>
-    `;
-  });
-}
-
-function playVideo(link) {
-  let player = document.getElementById("player");
-  player.classList.remove("hidden");
-
-  player.innerHTML = `
-    <iframe src="${link}" allowfullscreen></iframe>
+    <h3>Subjects</h3>
+    <div class="grid">
+      ${batch.subjects.map(sub => `
+        <div class="card">
+          <img src="${sub.image}">
+          <h4>${sub.title}</h4>
+        </div>
+      `).join('')}
+    </div>
   `;
-}
-
-function hideAll() {
-  document.querySelectorAll('.grid').forEach(el => {
-    el.innerHTML = "";
-    el.classList.add("hidden");
-  });
 }
