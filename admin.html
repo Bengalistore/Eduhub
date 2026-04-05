@@ -1,0 +1,14 @@
+<textarea id="jsonData" style="width:100%;height:300px;"></textarea>
+<button onclick="save()">Save</button>
+
+<script>
+fetch('data.json')
+.then(res => res.text())
+.then(txt => {
+  document.getElementById('jsonData').value = txt;
+});
+
+function save(){
+  alert("Edit JSON manually and re-upload to GitHub");
+}
+</script>
