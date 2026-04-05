@@ -1,31 +1,32 @@
 {
   "batches": [
     {
-      "id": "neet",
-      "title": "NEET 2026",
+      "id": "b1",
+      "title": "Batch 1",
+      "type": "neet",
+      "class": "11",
       "image": "https://via.placeholder.com/300x180",
+      "date": "10 April",
+      "time": "7 PM",
+      "overview": "Full NEET Preparation",
       "subjects": [
         {
-          "id": "physics",
+          "id": "phy",
           "title": "Physics",
-          "image": "https://via.placeholder.com/300",
-          "chapters": [
-            {
-              "id": "motion",
-              "title": "Motion",
-              "classes": [
-                {
-                  "title": "Class 1",
-                  "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-                  "duration": "45 min",
-                  "topic": "Introduction",
-                  "pdf": "#"
-                }
-              ]
-            }
-          ]
+          "image": "https://via.placeholder.com/300"
         }
       ]
+    },
+    {
+      "id": "b2",
+      "title": "Batch 2",
+      "type": "class12",
+      "class": "12",
+      "image": "https://via.placeholder.com/300x180",
+      "date": "12 April",
+      "time": "6 PM",
+      "overview": "Class 12 Board",
+      "subjects": []
     }
   ]
 }
